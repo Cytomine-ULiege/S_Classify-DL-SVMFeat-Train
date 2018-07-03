@@ -106,16 +106,6 @@
       "optional": false
     },
     {
-      "id": "save_path",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Save path",
-      "description": "A path for saving the resulting model",
-      "type": "String",
-      "default-value": "/tmp",
-      "optional": false
-    },
-    {
       "id": "n_jobs",
       "value-key": "@ID",
       "command-line-flag": "--@id",
