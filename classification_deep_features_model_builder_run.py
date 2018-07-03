@@ -1,7 +1,10 @@
 import os
+from tempfile import gettempdir
+
 from cytomine import CytomineJob
 import pickle
 import numpy as np
+from cytomine.models import AttachedFile
 from sklearn.metrics import make_scorer, accuracy_score
 from sklearn.model_selection import KFold, GroupKFold, GridSearchCV
 from sklearn.utils import check_random_state
@@ -20,10 +23,11 @@ def main(argv):
 
         # prepare paths
         working_path = cj.parameters.working_directory
+        if working_path is None or len(working_path) == 0:
+            working_path = gettempdir()
         data_path = os.path.join(working_path, "train_data")
-        save_path = cj.parameters.save_path
-        if not os.path.exists(save_path):
-            os.makedirs(save_path)
+        if not os.path.exists(data_path):
+            os.makedirs(data_path)
 
         # load and dump annotations
         cj.job.update(statusComment="Download annotations.")
@@ -95,7 +99,7 @@ def main(argv):
         cj.job.update(statusComment="Start grid search.", progress=80)
         grid_search.fit(x_feat, y, groups=labels)
 
-        model_path = os.path.join(save_path, "model.pkl")
+        model_path = os.path.join(working_path, "model.pkl")
         cj.job.update(statusComment="Save model in '{}'.".format(model_path), progress=90)
 
         with open(model_path, "wb+") as file:
@@ -105,6 +109,13 @@ def main(argv):
                 "reduction": cj.parameters.reduction,
                 "network": cj.parameters.network
             }, file)
+
+        AttachedFile(
+            cj.job,
+            domainIdent=cj.job.id,
+            filename=model_path,
+            domainClassName="be.cytomine.processing.Job"
+        ).upload()
 
         cj.job.update(statusComment="Finished.", progress=100)
 
