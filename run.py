@@ -52,6 +52,11 @@ def main(argv):
             y[i] = annotation.term[0]
             labels[i] = annotation.image
 
+        print("Data:")
+        print("> nb images : {}".format(x.shape[0]))
+        print("> unique classes: {}".format(np.unique(y).shape[0]))
+        print("> unique labels : {}".format(np.unique(labels).shape[0]))
+
         available_nets = {
             MODEL_RESNET50, MODEL_VGG19, MODEL_VGG16, MODEL_INCEPTION_V3,
             MODEL_INCEPTION_RESNET_V2, MODEL_MOBILE, MODEL_DENSE_NET_201,
@@ -99,6 +104,10 @@ def main(argv):
 
         cj.job.update(statusComment="Start grid search.", progress=80)
         grid_search.fit(x_feat, y, groups=labels)
+
+        print("Grid search:")
+        print("> best params: {}".format(grid_search.best_params_))
+        print("> best score : {}".format(grid_search.best_score_))
 
         model_path = os.path.join(working_path, "model.pkl")
         cj.job.update(statusComment="Save model in '{}'.".format(model_path), progress=90)
