@@ -1,7 +1,7 @@
 {
   "name": "Classif-Deep-Features-Model-Builder",
   "container-image": {
-    "image": "rmormont/s_classif-deep-features-model-builder",
+    "image": "neubiaswg5/w_classif-deep-features-model-builder",
     "type": "singularity"
   },
   "schema-version": "cytomine-0.1",
