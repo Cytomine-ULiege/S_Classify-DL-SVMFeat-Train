@@ -4,7 +4,7 @@ from math import floor
 from keras import Model
 from keras.applications.nasnet import NASNetLarge, preprocess_input as nasnet_preprocess
 from keras.applications.nasnet import NASNetMobile
-from keras.applications.densenet import DenseNet, preprocess_input as densenet_preprocess
+from keras.applications.densenet import DenseNet201, preprocess_input as densenet_preprocess
 from keras.applications.resnet50 import ResNet50, preprocess_input as resnet50_preprocess
 from keras.applications.inception_v3 import InceptionV3, preprocess_input as inceptionv3_preprocess
 from keras.applications.vgg16 import VGG16, preprocess_input as vgg16_preprocess
@@ -190,8 +190,7 @@ class PretrainedModelFeatures(object):
         elif model_name == MODEL_VGG19:
             model = VGG19(input_shape=input_shape, include_top=False, weights="imagenet")
         elif model_name == MODEL_DENSE_NET_201:
-            blcks = [6, 12, 48, 32]
-            model = DenseNet(blocks=blcks, input_shape=input_shape, include_top=False, weights="imagenet")
+            model = DenseNet201(input_shape=input_shape, include_top=False, weights="imagenet")
         elif model_name == MODEL_NASNET_LARGE:
             model = NASNetLarge(input_shape=input_shape, include_top=False, weights="imagenet")
         elif model_name == MODEL_NASNET_MOBILE:
