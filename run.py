@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from tempfile import gettempdir
 
 from cytomine import CytomineJob
@@ -22,7 +23,7 @@ def main(argv):
         random_state = check_random_state(cj.parameters.random_seed)
 
         # prepare paths
-        working_path = cj.parameters.working_directory
+        working_path = str(Path.home())
         if working_path is None or len(working_path) == 0:
             working_path = gettempdir()
         data_path = os.path.join(working_path, "train_data")
