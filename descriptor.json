@@ -1,169 +1,201 @@
 {
-  "name": "Classif-Deep-Features-Model-Builder",
-  "container-image": {
-    "image": "neubiaswg5/w_classif-deep-features-model-builder",
-    "type": "singularity"
-  },
-  "schema-version": "cytomine-0.1",
-  "description": "Cytomine software for image classification with deep features (model builder)",
-  "command-line": "python run.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE CLASSIFIER CV_FOLDS CLASSIFIER REDUCTION NETWORK CYTOMINE_USERS_IDS CYTOMINE_TERMS_IDS CYTOMINE_IMAGE_IDS SAVE_PATH WORKING_DIRECTORY N_JOBS RANDOM_SEED",
+  "command-line": "python run.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE CYTOMINE_ID_IMAGES CYTOMINE_ID_TERMS CYTOMINE_ID_USERS CYTOMINE_ID_PROJECTS CYTOMINE_REVIEWED CYTOMINE_ZOOM_LEVEL CYTOMINE_POSITIVE_TERMS CYTOMINE_BINARY N_JOBS NETWORK CLASSIFIER CV_FOLDS RANDOM_SEED ",
   "inputs": [
     {
-      "id": "cytomine_host",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
       "name": "Cytomine host",
       "description": "Cytomine server hostname",
-      "type": "String",
+      "set-by-server": true,
+      "value-key": "@ID",
       "optional": false,
-      "set-by-server": true
+      "id": "cytomine_host",
+      "type": "String",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_public_key",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
       "name": "Cytomine public key",
       "description": "Cytomine public key",
-      "type": "String",
+      "set-by-server": true,
+      "value-key": "@ID",
       "optional": false,
-      "set-by-server": true
+      "id": "cytomine_public_key",
+      "type": "String",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_private_key",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
       "name": "Cytomine private key",
       "description": "Cytomine private key",
-      "type": "String",
+      "set-by-server": true,
+      "value-key": "@ID",
       "optional": false,
-      "set-by-server": true
+      "id": "cytomine_private_key",
+      "type": "String",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_id_project",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
       "name": "Cytomine project id",
       "description": "Cytomine project id",
-      "type": "String",
+      "set-by-server": true,
+      "value-key": "@ID",
       "optional": false,
-      "set-by-server": true
+      "id": "cytomine_id_project",
+      "type": "Number",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_id_software",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
       "name": "Cytomine software id",
       "description": "Cytomine software id",
-      "type": "String",
+      "set-by-server": true,
+      "value-key": "@ID",
       "optional": false,
-      "set-by-server": true
+      "id": "cytomine_id_software",
+      "type": "Number",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_images_ids",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Cytomine images ids",
+      "name": "Cytomine ids images",
       "description": "(Annotations filtering) Identifiers of images whose the annotations should be selected for training.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_id_images",
       "type": "List",
-      "default-value": null
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_terms_ids",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Cytomine terms ids",
+      "name": "Cytomine ids terms",
       "description": "(Annotations filtering) Identifiers of terms of which the annotations should be selected for training.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_id_terms",
       "type": "List",
-      "default-value": null
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_users_ids",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Cytomine users ids",
+      "name": "Cytomine ids users",
       "description": "(Annotations filtering) Identifiers of users whose the annotations should be selected for training.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_id_users",
       "type": "List",
-      "default-value": null
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cytomine_reviewed",
+      "name": "Cytomine ids projects",
+      "description": "(Annotations filtering) Identifiers of projects of which the annotations should be selected for training.",
+      "set-by-server": false,
       "value-key": "@ID",
-      "command-line-flag": "--@id",
+      "optional": true,
+      "id": "cytomine_id_projects",
+      "type": "List",
+      "command-line-flag": "--@id"
+    },
+    {
+      "default-value": 0,
       "name": "Cytomine reviewed",
-      "description": "(Annotations filtering) Whether (true) or not (false) to include the reviewed annotations in training data.",
+      "description": "(Annotations filtering) '0' for using regular annotations. '1' for also including reviewed annotations. '2' for using only reviewed annotations.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_reviewed",
+      "type": "Number",
+      "command-line-flag": "--@id"
+    },
+    {
+      "default-value": 0,
+      "name": "Zoom level",
+      "description": "The zoom level at which the algorithm should work.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_zoom_level",
+      "type": "Number",
+      "command-line-flag": "--@id"
+    },
+    {
+      "default-value": "",
+      "name": "Zoom level",
+      "description": "List of terms that should be considered as positive in a binary problem (ignored if binary is false)",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_positive_terms",
+      "type": "ListDomain",
+      "command-line-flag": "--@id"
+    },
+    {
+      "default-value": "false",
+      "name": "Cytomine binary",
+      "description": "Whether or not to treat the problem as a binary classification problem",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cytomine_binary",
       "type": "Boolean",
-      "default-value": false,
-      "optional": true
+      "command-line-flag": "--@id"
     },
     {
-      "id": "working_directory",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Working directory",
-      "description": "Working directory for the server",
-      "type": "String",
-      "default-value": null,
-      "optional": false
-    },
-    {
-      "id": "n_jobs",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
+      "default-value": 1,
       "name": "Number of jobs",
       "description": "Number of jobs for training",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": false,
+      "id": "n_jobs",
       "type": "Number",
-      "default-value": 1,
-      "optional": false
+      "command-line-flag": "--@id"
     },
     {
-      "id": "network",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
+      "default-value": "densenet",
       "name": "Network",
-      "description": "Name identifier of the network among: 'dense_net_201', 'resnet50', 'vgg19', 'vgg16', 'inception_v3', 'inception_resnet_v2', 'mobile', 'dense_net_201', 'nas_net_large', 'nas_net_mobile'",
+      "description": "Name identifier of the network among: \u0027resnet\u0027 and \u0027densenet\u0027",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "network",
       "type": "String",
-      "default-value": "dense_net_201",
-      "optional": true
+      "command-line-flag": "--@id"
     },
     {
-      "id": "reduction",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Reduction",
-      "description": "Reduction strategy to compress features maps into a feature vector",
-      "type": "String",
-      "default-value": "average_pooling",
-      "optional": true
-    },
-    {
-      "id": "classifier",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
-      "name": "Classifier",
-      "description": "The classifier to use for classifying the features among: 'svm',...",
-      "type": "String",
       "default-value": "svm",
-      "optional": true
+      "name": "Classifier",
+      "description": "The classifier to use for classifying the features among: \u0027svm\u0027",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "classifier",
+      "type": "String",
+      "command-line-flag": "--@id"
     },
     {
-      "id": "cv_folds",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
+      "default-value": 10,
       "name": "Cross-validation folds",
       "description": "Number of folds for cross validation. Can be adjusted according to data distribution.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "cv_folds",
       "type": "Number",
-      "default-value": 10,
-      "optional": true
+      "command-line-flag": "--@id"
     },
     {
-      "id": "random_seed",
-      "value-key": "@ID",
-      "command-line-flag": "--@id",
+      "default-value": 42,
       "name": "Random seed",
       "description": "Random seed for PRNG.",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "random_seed",
       "type": "Number",
-      "default-value": 42,
-      "optional": true
+      "command-line-flag": "--@id"
     }
-  ]
+  ],
+  "name": "Classify-DL-SVMFeat-Train",
+  "description": "Cytomine software for image classification with deep features (model training)",
+  "schema-version": "cytomine-0.1",
+  "container-image": {
+    "image": "neubiaswg5/s_classify-dl-svmfeat-train",
+    "type": "singularity"
+  }
 }
