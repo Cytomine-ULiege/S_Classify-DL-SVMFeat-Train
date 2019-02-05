@@ -19,7 +19,7 @@ from dataset import ImageFolderWithPaths, normCenterCropTransform
 
 
 NETWORKS = {
-    "densenet": (1920, densenet201),
+#    "densenet": (1920, densenet201),
     "resnet": (2048, resnet50)
 }
 
