@@ -64,9 +64,8 @@ def main(argv):
 
         cj.job.update(progress=15, statusComment="Prepare data loader....")
         width = 224
-        batch_size = 16
         dataset = ImageFolderWithPaths(in_path, transform=normCenterCropTransform(width))
-        sampler = BatchSampler(SequentialSampler(dataset), batch_size=batch_size, drop_last=False)
+        sampler = BatchSampler(SequentialSampler(dataset), batch_size=cj.parameters.batch_size, drop_last=False)
         loader = DataLoader(dataset, batch_sampler=sampler, num_workers=cj.parameters.n_jobs)
 
         cj.job.update(progress=17, statusComment="Load network...")
@@ -122,7 +121,7 @@ def main(argv):
         print("> best score : {}".format(grid_search.best_score_))
 
         cj.job.update(progress=95, statusComment="Save model...")
-        model_path = os.path.join(working_path, "model.pkl")
+        model_path = os.path.join(working_path, "model.joblib")
         joblib.dump(grid_search.best_estimator_, model_path)
 
         Property(cj.job, key="classifier", value=cj.parameters.classifier).save()
