@@ -1,13 +1,8 @@
 import re
-
-from torch.utils import model_zoo
-from torchvision.models.densenet import DenseNet, model_urls as densenet_urls
-from torchvision.models.resnet import ResNet, Bottleneck, model_urls as resnet_urls
+import torch
+from torchvision.models.densenet import DenseNet
+from torchvision.models.resnet import ResNet, Bottleneck
 import torch.nn.functional as F
-from torchvision.transforms import transforms, Resize
-
-
-
 
 
 def resnet50(pretrained=False):
@@ -18,7 +13,7 @@ def resnet50(pretrained=False):
     """
     model = BHResNet(Bottleneck, [3, 4, 6, 3])
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(resnet_urls['resnet50']))
+        model.load_state_dict(torch.load("/app/resnet50-19c8e357.pth"))
     return model
 
 
@@ -50,7 +45,7 @@ def densenet201(pretrained=False, **kwargs):
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
+    model = BHDenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
                      **kwargs)
     if pretrained:
         # '.'s are no longer allowed in module names, but pervious _DenseLayer
@@ -59,7 +54,7 @@ def densenet201(pretrained=False, **kwargs):
         # to find such keys.
         pattern = re.compile(
             r'^(.*denselayer\d+\.(?:norm|relu|conv))\.((?:[12])\.(?:weight|bias|running_mean|running_var))$')
-        state_dict = model_zoo.load_url(densenet_urls['densenet201'])
+        state_dict = torch.load("/app/densenet201-c1103571.pth")
         for key in list(state_dict.keys()):
             res = pattern.match(key)
             if res:
