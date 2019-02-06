@@ -1,5 +1,5 @@
 {
-  "command-line": "python run.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE CYTOMINE_ID_IMAGES CYTOMINE_ID_TERMS CYTOMINE_ID_USERS CYTOMINE_ID_PROJECTS CYTOMINE_REVIEWED CYTOMINE_ZOOM_LEVEL CYTOMINE_POSITIVE_TERMS CYTOMINE_BINARY N_JOBS NETWORK CLASSIFIER CV_FOLDS RANDOM_SEED ",
+  "command-line": "python run.py CYTOMINE_HOST CYTOMINE_PUBLIC_KEY CYTOMINE_PRIVATE_KEY CYTOMINE_ID_PROJECT CYTOMINE_ID_SOFTWARE CYTOMINE_ID_IMAGES CYTOMINE_ID_TERMS CYTOMINE_ID_USERS CYTOMINE_ID_PROJECTS CYTOMINE_REVIEWED CYTOMINE_ZOOM_LEVEL CYTOMINE_POSITIVE_TERMS CYTOMINE_BINARY N_JOBS NETWORK CLASSIFIER CV_FOLDS RANDOM_SEED BATCH_SIZE ",
   "inputs": [
     {
       "name": "Cytomine host",
@@ -94,7 +94,7 @@
     {
       "default-value": 0,
       "name": "Cytomine reviewed",
-      "description": "(Annotations filtering) '0' for using regular annotations. '1' for also including reviewed annotations. '2' for using only reviewed annotations.",
+      "description": "(Annotations filtering) \u00270\u0027 for using regular annotations. \u00271\u0027 for also including reviewed annotations. \u00272\u0027 for using only reviewed annotations.",
       "set-by-server": false,
       "value-key": "@ID",
       "optional": true,
@@ -187,6 +187,17 @@
       "value-key": "@ID",
       "optional": true,
       "id": "random_seed",
+      "type": "Number",
+      "command-line-flag": "--@id"
+    },
+    {
+      "default-value": 8,
+      "name": "Batch size",
+      "description": "Number of images to convert to features at once",
+      "set-by-server": false,
+      "value-key": "@ID",
+      "optional": true,
+      "id": "batch_size",
       "type": "Number",
       "command-line-flag": "--@id"
     }
