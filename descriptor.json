@@ -206,7 +206,7 @@
   "description": "Cytomine software for image classification with deep features (model training)",
   "schema-version": "cytomine-0.1",
   "container-image": {
-    "image": "neubiaswg5/s_classify-dl-svmfeat-train",
+    "image": "cytomineuliege/s_classify-dl-svmfeat-train",
     "type": "singularity"
   }
 }
