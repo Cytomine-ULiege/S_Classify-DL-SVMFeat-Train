@@ -124,9 +124,6 @@ def main(argv):
         model_path = os.path.join(working_path, "model.joblib")
         joblib.dump(grid_search.best_estimator_, model_path)
 
-        Property(cj.job, key="classifier", value=cj.parameters.classifier).save()
-        Property(cj.job, key="network", value=cj.parameters.network).save()
-
         AttachedFile(
             cj.job,
             domainIdent=cj.job.id,
