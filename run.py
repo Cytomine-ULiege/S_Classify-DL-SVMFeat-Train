@@ -3,8 +3,8 @@ import torch
 import numpy as np
 from pathlib import Path
 from cytomine import CytomineJob
-from cytomine.models import AttachedFile, Job, Property
-from cytomine.utilities.annotations import get_annotations
+from cytomine.models import AttachedFile, Job
+from cytomine.utilities.software import setup_classify
 from sklearn.externals import joblib
 from sklearn.metrics import make_scorer, accuracy_score, roc_auc_score
 from sklearn.model_selection import KFold, GroupKFold, GridSearchCV
@@ -19,7 +19,7 @@ from dataset import ImageFolderWithPaths, normCenterCropTransform
 
 
 NETWORKS = {
-#    "densenet": (1920, densenet201),
+    "densenet": (1920, densenet201),
     "resnet": (2048, resnet50)
 }
 
@@ -41,25 +41,11 @@ def main(argv):
         # prepare paths
         working_path = str(Path.home())
         in_path = os.path.join(working_path, "data")
-        os.makedirs(in_path, exist_ok=True)
-
-        # load and dump annotations
-        cj.job.update(statusComment="Download annotations...")
-        projects = {cj.parameters.cytomine_id_project}.union(parse_list_or_none(cj.parameters.cytomine_id_projects))
-        annotations = get_annotations(
-            projects=list(projects),
-            images=parse_list_or_none(cj.parameters.cytomine_id_images),
-            terms=parse_list_or_none(cj.parameters.cytomine_id_terms),
-            users=parse_list_or_none(cj.parameters.cytomine_id_users),
-            reviewed=cj.parameters.cytomine_reviewed,
-            showTerm=True, showMeta=True
-        )
-
-        cj.job.update(progress=5, statusComment="Download crops...")
-        _ = annotations.dump_crops(
-            dest_pattern=os.path.join(in_path, "{term}", "{image}_{id}.png"),
-            n_workers=cj.parameters.n_jobs,
-            override=False
+        setup_classify(
+            cj.arguments, cj.logger,
+            root_path=working_path, image_folder="data",
+            dest_pattern=os.path.join("{term}", "{image}_{id}.png"),
+            showTerm=True, showMeta=True, showWKT=True
         )
 
         cj.job.update(progress=15, statusComment="Prepare data loader....")
