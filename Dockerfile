@@ -15,10 +15,16 @@ RUN pip install torchvision==0.2.1 pydensecrf==1.0rc3
 # Other packages
 RUN pip install scikit-learn==0.20
 
-COPY beheaded_networks.py /app/beheaded_networks.py
-COPY resnet50-19c8e357.pth /app/resnet50-19c8e357.pth
-COPY densenet201-c1103571.pth /app/densenet201-c1103571.pth
-COPY dataset.py /app/dataset.py
-COPY run.py /app/run.py
+# --------------------------------------------------------------------------------------------
+# Download weights
+RUN mkdir /app
+RUN wget https://download.pytorch.org/models/resnet50-19c8e357.pth -o /app/resnet50-19c8e357.pth
+RUN wget https://download.pytorch.org/models/densenet201-c1103571.pth -o /app/densenet201-c1103571.pth
+
+# --------------------------------------------------------------------------------------------
+# Files
+ADD beheaded_networks.py /app/beheaded_networks.py
+ADD dataset.py /app/dataset.py
+ADD run.py /app/run.py
 
 ENTRYPOINT ["python", "/app/run.py"]
