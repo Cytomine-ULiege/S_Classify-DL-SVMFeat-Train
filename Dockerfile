@@ -23,8 +23,6 @@ RUN wget https://download.pytorch.org/models/densenet201-c1103571.pth -o /app/de
 
 # --------------------------------------------------------------------------------------------
 # Files
-ADD beheaded_networks.py /app/beheaded_networks.py
-ADD dataset.py /app/dataset.py
 ADD run.py /app/run.py
 
 ENTRYPOINT ["python", "/app/run.py"]
