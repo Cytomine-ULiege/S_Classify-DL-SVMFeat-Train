@@ -61,6 +61,7 @@
       "id": "cytomine_id_users",
       "type": "ListDomain",
       "uri": "/api/project/$currentProject$/user.json",
+      "uri-sort-attribute": "username",
       "uri-print-attribute": "username",
       "command-line-flag": "--@id"
     },
@@ -72,9 +73,10 @@
       "value-key": "@ID",
       "optional": true,
       "id": "cytomine_id_images",
-      "type": "ListDomain",
+	    "type": "ListDomain",
       "uri": "/api/project/$currentProject$/imageinstance.json",
       "uri-print-attribute": "instanceFilename",
+      "uri-sort-attribute": "instanceFilename",
       "command-line-flag": "--@id"
     },
     {
@@ -88,6 +90,7 @@
       "type": "ListDomain",
       "uri": "/api/project/$currentProject$/term.json",
       "uri-print-attribute": "name",
+      "uri-sort-attribute": "name",
       "command-line-flag": "--@id"
     },
     {
@@ -123,6 +126,7 @@
       "type": "ListDomain",
       "uri": "/api/project/$currentProject$/term.json",
       "uri-print-attribute": "name",
+      "uri-sort-attribute": "name",
       "command-line-flag": "--@id"
     },
     {
