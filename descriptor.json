@@ -218,11 +218,11 @@
       "command-line-flag": "--@id"
     }
   ],
-  "name": "Classify-DL-SVMFeat-Pred-BI",
-  "description": "Cytomine software for image classification with deep features (inference)",
+  "name": "Classify-DL-SVMFeat-Train",
+  "description": "Cytomine software for image classification with deep features (training)",
   "schema-version": "cytomine-0.1",
   "container-image": {
-    "image": "cytomineuliege/s_classify-dl-svmfeat-pred-bi",
+    "image": "cytomineuliege/s_classify-dl-svmfeat-train",
     "type": "singularity"
   }
 }

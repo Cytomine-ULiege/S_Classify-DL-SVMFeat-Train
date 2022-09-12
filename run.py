@@ -1,11 +1,11 @@
 import os
 import torch
+import joblib
 import numpy as np
 from pathlib import Path
 from mtdp import build_model
 from cytomine import CytomineJob
 from sklearn.svm import LinearSVC
-from sklearn.externals import joblib
 from sklearn.utils import check_random_state
 from torchvision.datasets import ImageFolder
 from cytomine.models import AttachedFile, Job, Property
@@ -61,9 +61,10 @@ def main(argv):
 
         # prepare paths
         working_path = str(Path.home())
-        in_path = os.path.join(working_path, "data")
+        in_path = os.path.join(working_path, "data", "zoom_level", str(cj.parameters.cytomine_zoom_level))
+        cj.parameters.cytomine_id_projects = str(cj.parameters.cytomine_id_project)
         setup_classify(
-            args=cj.arguments, logger=cj.logger,
+            args=cj.parameters, logger=cj.job_logger(start=0, end=15),
             root_path=working_path, image_folder="data",
             dest_pattern=os.path.join("{term}", "{image}_{id}.png"),
             showTerm=True, showMeta=True, showWKT=True
@@ -97,8 +98,8 @@ def main(argv):
             x_batch, y_batch = x_batch.to(device), y_batch.to(device)
             f_batch = network.forward(x_batch)
             end = prev_start + f_batch.shape[0]
-            x[prev_start:end] = f_batch.detach().cpu().numpy()
-            y[prev_start:end] = y_batch
+            x[prev_start:end] = f_batch.detach().cpu().numpy().squeeze()
+            y[prev_start:end] = [int(dataset.classes[v.item()]) for v in y_batch]
             groups[prev_start:end] = [int(os.path.basename(p).split("_", 1)[0]) for p in p_batch]
             prev_start = end
 
@@ -108,7 +109,7 @@ def main(argv):
         classes = np.array(classes) if len(classes) > 0 else np.unique(y)
         n_classes = classes.shape[0]
         keep = np.in1d(y, classes)
-        x, y = x[keep], y[keep]
+        x, y, groups = x[keep], y[keep], groups[keep]
 
         if cj.parameters.cytomine_binary:
             cj.logger.info("Will be training on 2 classes ({} classes before binarization).".format(n_classes))
